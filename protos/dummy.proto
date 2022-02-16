@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package grpc;
+
+// defining chat member
+message Member {
+  string name = 1;
+  string id = 2;
+}
+
+// defining chat message component
+// a chat message contains a sender id and the text of the message itself
+message TextMessage {
+  string sender_id = 1;
+  string message = 2;
+}
+
+// an empty object for easier communication
+message Empty {}
+
+// defining the service itself
+service Messaging{
+  // the sending send only one message
+  rpc send(TextMessage) returns (Empty);
+  // receiving multiple messages
+  // receive send the person object who wants to receive
+  // and returns a stream of Text messages
+  rpc receive(Member) returns (stream TextMessage);
+}
+
